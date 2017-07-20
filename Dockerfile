@@ -4,10 +4,10 @@ LABEL maintainer nighttardis (nighttardis@user.noreply.github.com)
 
 ENV SURICATA_VERSION 3.2.3
 ENV SURICATA_PATH http://www.openinfosecfoundation.org/download/suricata-$SURICATA_VERSION.tar.gz
-ENV BUILD_TOOLS "build-essential autoconf automake pkg-config gnupg2 wget"
+ENV BUILD_TOOLS "build-essential autoconf automake pkg-config"
 ENV JAVA "openjdk-8-jre-headless ca-certificates-java"
 
-RUN apt-get update && apt-get -y --no-install-recommends install apt-transport-https && \
+RUN apt-get update && apt-get -y --no-install-recommends install apt-transport-https gnupg2 && \
  apt-get -y install wget && wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - \
  && echo "deb http://ftp.de.debian.org/debian jessie-backports main" >> /etc/apt/sources.list \
  && echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" >> /etc/apt/sources.list \
@@ -18,7 +18,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install apt-transport-h
  && wget $SURICATA_PATH && tar -xzf suricata-$SURICATA_VERSION.tar.gz && cd suricata-$SURICATA_VERSION \
  && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var && make && make install && make install-conf  && ldconfig \
  && cd .. && rm -rf suricata-$SURICATA_VERSION.tar.gz && rm -rf suricata-$SURICATA_VERSION \
- && apt-get remove --purge -y $BUILD_TOOLS apt-transport-https wget && apt-get -y autoremove
+ && apt-get remove --purge -y $BUILD_TOOLS apt-transport-https wget gnupg2 && apt-get -y autoremove
 
 ADD ./suricata.yaml /etc/suricata/suricata.yaml
 ADD ./supervisor.conf /etc/supervisor/conf.d/
