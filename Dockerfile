@@ -4,7 +4,7 @@ LABEL maintainer nighttardis (nighttardis@user.noreply.github.com)
 
 ENV SURICATA_VERSION 3.2.3
 ENV SURICATA_PATH http://www.openinfosecfoundation.org/download/suricata-$SURICATA_VERSION.tar.gz
-ENV BUILD_TOOLS "build-essential autoconf automake pkg-config wget"
+ENV BUILD_TOOLS "build-essential autoconf automake pkg-config wget gnupg2"
 ENV JAVA "openjdk-8-jre-headless ca-certificates-java"
 
 RUN apt-get update && apt-get -y --no-install-recommends install apt-transport-https && \
