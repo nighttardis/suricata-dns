@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:jessie
 
 LABEL maintainer nighttardis (nighttardis@user.noreply.github.com)
 
@@ -7,7 +7,7 @@ ENV SURICATA_PATH http://www.openinfosecfoundation.org/download/suricata-$SURICA
 ENV BUILD_TOOLS "build-essential autoconf automake pkg-config"
 ENV JAVA "openjdk-8-jre-headless ca-certificates-java"
 
-RUN apt-get update && apt-get -y --no-install-recommends install apt-transport-https gnupg2 && \
+RUN apt-get update && apt-get -y --no-install-recommends install apt-transport-https && \
  apt-get -y install wget && wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - \
  && echo "deb http://ftp.de.debian.org/debian jessie-backports main" >> /etc/apt/sources.list \
  && echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" >> /etc/apt/sources.list \
